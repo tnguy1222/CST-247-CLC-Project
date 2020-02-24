@@ -1,5 +1,5 @@
 ﻿using CST247_CLCProject.Models;
-using CST247_CLCProject.Services.Business;
+using CST247_CLCProject.Models.Business;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,18 +19,37 @@ namespace CST247_CLCProject.Controllers
         [HttpPost]
         public ActionResult Register(UserModel user)
         {
+            //Call the Security Business Service create and findUserByEmail method from the Register() method
             SecurityService securityService = new SecurityService();
-            Boolean success = securityService.create(user);
 
-            if (success)
-            {
-                return View("LoginSuccess");
-            }
-            else
-            {
-                return View("LoginFailed");
-            }
+            // If satetement check for data validation
+            if (ModelState.IsValid)
+            { 
+                // the results of findByUserByEmail method call is saved in local method exist
+                Boolean exist = securityService.findUserByEmail(user);
+                if (!exist)
+                {
+                    // the results of create method call is saved in local method sucess
+                    Boolean success = securityService.create(user);
 
+                    if (success)
+                    {
+                        //if the success variable returns true, navigate to RegisterSuccess View
+                        return View("RegisterSuccess") ;
+                    }
+                    else
+                    {
+                        //if the success variable returns true, navigate to RegisterFailed View
+                        return View("RegisterFailed");
+                    }
+                }
+                else
+                {
+                    //if the exist variable returns true, navigate to RegisterExisted View
+                    return View("RegisterExisted");
+                }
+            }
+            return View("Register");
         }
     }
 }

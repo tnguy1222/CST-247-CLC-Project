@@ -28,7 +28,25 @@ namespace CST247_CLCProject
             routes.MapRoute(
                 name: "Login",
                 url: "{Login}",
-                defaults: new { controller = "Login", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "Login", action = "Login", id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+                name: "Game",
+                url: "{Game}",
+                defaults: new { controller = "Game", action = "Index", id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+                name: "winGame",
+                url: "winGame",
+                defaults: new { controller = "Game", action = "winGame", id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+                name: "loseGame",
+                url: "loseGame",
+                defaults: new { controller = "Game", action = "loseGame", id = UrlParameter.Optional }
             );
         }
     }
